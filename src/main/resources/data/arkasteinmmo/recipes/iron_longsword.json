@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " FF",
+    " FF",
+    " SS"
+  ],
+  "key": {
+    "F": { "item": "minecraft:iron_ingot" },
+    "S": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "minecraft:iron_axe",
+    "count": 1,
+    "nbt": "{CustomModelData:7,display:{Name:'{\"text\":\"Iron Greatsword\"}'}}"
+  }
+}
