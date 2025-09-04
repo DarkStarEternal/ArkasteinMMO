@@ -1,0 +1,6 @@
+name: ArkasteinMMO
+version: '1.0-SNAPSHOT'
+main: com.dark.arkasteinMMO.ArkasteinMMO
+api-version: '1.21'
+authors: [ Dark ]
+description: Arkastein spells in a PaperMC plugin for Sylvar.net
