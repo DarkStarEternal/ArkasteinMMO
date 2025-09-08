@@ -2,7 +2,10 @@ package com.dark.arkasteinMMO;
 
 import com.dark.arkasteinMMO.items.CustomItems;
 import com.dark.arkasteinMMO.items.ItemEvents;
+import com.dark.arkasteinMMO.recipes.DiamondLongSwordRecipe;
+import com.dark.arkasteinMMO.recipes.GoldLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.IronLongSwordRecipe;
+import com.dark.arkasteinMMO.recipes.NetheriteLongSwordRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -32,7 +35,9 @@ public final class ArkasteinMMO extends JavaPlugin {
 
         // Recipes
         new IronLongSwordRecipe(getServer(), items).createIronLongSwordRecipe();
-
+        new GoldLongSwordRecipe(getServer(), items).createGoldLongSwordRecipe();
+        new DiamondLongSwordRecipe(getServer(), items).createDiamondLongSwordRecipe();
+        new NetheriteLongSwordRecipe(getServer(), items).creatNetheriteLongSwordRecipe();
     }
 
 

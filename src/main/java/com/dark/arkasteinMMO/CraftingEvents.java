@@ -17,7 +17,7 @@ public class CraftingEvents implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onCraft(CraftItemEvent event) {
 
         ItemStack result = event.getCurrentItem();
@@ -30,5 +30,5 @@ public class CraftingEvents implements Listener {
             result = new CustomItems((JavaPlugin) plugin).createIronLongsword();
             event.getInventory().setResult(result);
         }
-    }
+    }*/
 }
