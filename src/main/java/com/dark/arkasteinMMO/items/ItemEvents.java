@@ -37,7 +37,7 @@ public class ItemEvents implements Listener {
         );
 
         if (tag != null && tag == (byte) 1 && event.getEntity() instanceof LivingEntity target) {
-            target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 49,1));
+            target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 40,1));
         }
     }
 }
