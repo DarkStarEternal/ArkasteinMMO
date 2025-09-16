@@ -31,9 +31,9 @@ public final class ArkasteinMMO extends JavaPlugin {
 
         // Events
         Bukkit.getPluginManager().registerEvents(new ItemEvents(this), this);
-        Bukkit.getPluginManager().registerEvents(new CraftingEvents(this), this);
 
         // Recipes
+        //Longswords
         new IronLongSwordRecipe(getServer(), items).createIronLongSwordRecipe();
         new GoldLongSwordRecipe(getServer(), items).createGoldLongSwordRecipe();
         new DiamondLongSwordRecipe(getServer(), items).createDiamondLongSwordRecipe();

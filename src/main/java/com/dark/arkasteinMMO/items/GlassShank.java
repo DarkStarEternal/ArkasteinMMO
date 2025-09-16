@@ -12,38 +12,43 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 import java.util.UUID;
 
-public class DiamondLongsword {
+public class GlassShank {
     JavaPlugin plugin;
 
-    public DiamondLongsword(JavaPlugin plugin) {
+    public GlassShank(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public ItemStack DiamondLongSwordItem() {
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
+    public ItemStack GlassShankItem() {
+        ItemStack item = new ItemStack(Material.STONE_AXE);
         ItemMeta meta = item.getItemMeta();
 
         AttributeModifier damageModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackDamage",
-                8.5,
+                3,
                 AttributeModifier.Operation.ADD_NUMBER
         );
         AttributeModifier speedModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackSpeed",
-                1.3,
+                1.7,
                 AttributeModifier.Operation.ADD_NUMBER
         );
 
         if (meta != null) {
-            meta.setDisplayName("Diamond Longsword");
-            meta.setLore(List.of("Longsword - Dual wield","Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
-            meta.setCustomModelData(7);
+            meta.setDisplayName("Glass Shank");
+            meta.setLore(List.of(
+                    "Improvised small weapon",
+                    "Everything can be used as a weapon, even shattered pieces of glass.",
+                    "Abilities:",
+                    "Cracked: May cause bleed damage to hit enemies at the cost of five durablity."
+            ));
+            meta.setCustomModelData(1);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
             meta.getPersistentDataContainer().set(
-                    new NamespacedKey(plugin, "diamod_longsword"),
+                    new NamespacedKey(plugin, "glassshank"),
                     PersistentDataType.BYTE,
                     (byte) 1
             );

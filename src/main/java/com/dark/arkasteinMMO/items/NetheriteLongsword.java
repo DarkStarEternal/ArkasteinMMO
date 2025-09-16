@@ -24,21 +24,21 @@ public class NetheriteLongsword {
         ItemMeta meta = item.getItemMeta();
 
         AttributeModifier damageModifier = new AttributeModifier(
-                UUID.randomUUID(),             // unique ID
-                "generic.attackDamage",        // name
-                9.5,                           // value (+2 damage)
-                AttributeModifier.Operation.ADD_NUMBER // add directly
+                UUID.randomUUID(),
+                "generic.attackDamage",
+                9.5,
+                AttributeModifier.Operation.ADD_NUMBER
         );
         AttributeModifier speedModifier = new AttributeModifier(
-                UUID.randomUUID(),             // unique ID
-                "generic.attackSpeed",        // name
-                1.3,                           // value (+2 damage)
-                AttributeModifier.Operation.ADD_NUMBER // add directly
+                UUID.randomUUID(),
+                "generic.attackSpeed",
+                1.3,
+                AttributeModifier.Operation.ADD_NUMBER
         );
 
         if (meta != null) {
             meta.setDisplayName("Netherite Longsword");
-            meta.setLore(List.of("Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
+            meta.setLore(List.of("Longsword - Dual wield","Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
             meta.setCustomModelData(7);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);

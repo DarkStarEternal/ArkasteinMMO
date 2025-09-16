@@ -39,7 +39,7 @@ public class IronLongsword {
 
         if (meta != null) {
             meta.setDisplayName("Iron Longsword");
-            meta.setLore(List.of("Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
+            meta.setLore(List.of("Longsword - Dual wield","Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
             meta.setCustomModelData(7);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
