@@ -27,20 +27,20 @@ public class FlamingSledgehammer {
         AttributeModifier damageModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackDamage",
-                47,
+                38.0,
                 AttributeModifier.Operation.ADD_NUMBER
         );
         AttributeModifier speedModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackSpeed",
-                0.5,
+                -0.3,
                 AttributeModifier.Operation.ADD_NUMBER
         );
 
         if (meta != null) {
             meta.setDisplayName("Flaming Sledgehammer");
-            meta.setLore(List.of("Magical Sledgehammer - Dual wield","Enchanted with ember spells, Hammers like these are perfect for battle.", "Ablities:", "Flame tip: Sets hit targets on fire.", "Magical mend: Repairs itself using XP."));
-            meta.setCustomModelData(5);
+            meta.setLore(List.of("Magical Sledgehammer - Dual hand","Enchanted with ember spells, Hammers like these are perfect for battle.", "Ablities:", "Flame tip: Sets hit targets on fire.", "Magical mend: Repairs itself using XP."));
+            meta.setCustomModelData(1);
             meta.addEnchant(Enchantment.MENDING, 1,true);
             meta.addEnchant(Enchantment.FIRE_ASPECT, 2,true);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);

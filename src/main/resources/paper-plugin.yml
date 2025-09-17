@@ -6,3 +6,9 @@ api-version: '1.21'
 authors: [ Dark ]
 description: The Blacktome universe functionalities in a paper plugin, including bosses, magic and more.
 load: STARTUP
+
+commands:
+  arkastein:
+    description: Root command for Arkastein MMO
+    usage: /arkastein
+    permission: arkastein.use

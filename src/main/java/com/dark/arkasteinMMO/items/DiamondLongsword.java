@@ -26,20 +26,20 @@ public class DiamondLongsword {
         AttributeModifier damageModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackDamage",
-                8.5,
+                1.6,
                 AttributeModifier.Operation.ADD_NUMBER
         );
         AttributeModifier speedModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackSpeed",
-                1.3,
+                -0.3,
                 AttributeModifier.Operation.ADD_NUMBER
         );
 
         if (meta != null) {
             meta.setDisplayName("Diamond Longsword");
-            meta.setLore(List.of("Longsword - Dual wield","Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
-            meta.setCustomModelData(7);
+            meta.setLore(List.of("Longsword - Dual hand","Longer than a normal sword, this weapon should rather not be used in crowded spaces."));
+            meta.setCustomModelData(1);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
             meta.getPersistentDataContainer().set(

@@ -1,24 +1,19 @@
 package com.dark.arkasteinMMO;
 
+import com.dark.arkasteinMMO.commands.ArkasteinMMOCommands;
 import com.dark.arkasteinMMO.items.CustomItems;
 import com.dark.arkasteinMMO.items.ItemEvents;
 import com.dark.arkasteinMMO.recipes.DiamondLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.GoldLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.IronLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.NetheriteLongSwordRecipe;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
-
-import static org.bukkit.Bukkit.getServer;
 
 public final class ArkasteinMMO extends JavaPlugin {
 
@@ -32,12 +27,20 @@ public final class ArkasteinMMO extends JavaPlugin {
         // Events
         Bukkit.getPluginManager().registerEvents(new ItemEvents(this), this);
 
+        // Commands
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            LiteralCommandNode<CommandSourceStack> node =
+                    ArkasteinMMOCommands.create(items).build();
+            commands.registrar().register(node);
+        });
+
         // Recipes
-        //Longswords
+        // Longswords
         new IronLongSwordRecipe(getServer(), items).createIronLongSwordRecipe();
         new GoldLongSwordRecipe(getServer(), items).createGoldLongSwordRecipe();
         new DiamondLongSwordRecipe(getServer(), items).createDiamondLongSwordRecipe();
         new NetheriteLongSwordRecipe(getServer(), items).creatNetheriteLongSwordRecipe();
+
     }
 
 

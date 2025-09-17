@@ -26,7 +26,7 @@ public class GlassShank {
         AttributeModifier damageModifier = new AttributeModifier(
                 UUID.randomUUID(),
                 "generic.attackDamage",
-                3,
+                -6.0,
                 AttributeModifier.Operation.ADD_NUMBER
         );
         AttributeModifier speedModifier = new AttributeModifier(
@@ -39,7 +39,7 @@ public class GlassShank {
         if (meta != null) {
             meta.setDisplayName("Glass Shank");
             meta.setLore(List.of(
-                    "Improvised small weapon",
+                    "Improvised small weapon - Single hand",
                     "Everything can be used as a weapon, even shattered pieces of glass.",
                     "Abilities:",
                     "Cracked: May cause bleed damage to hit enemies at the cost of five durablity."

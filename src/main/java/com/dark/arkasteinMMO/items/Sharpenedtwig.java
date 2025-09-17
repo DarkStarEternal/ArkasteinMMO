@@ -37,7 +37,7 @@ public class Sharpenedtwig {
         );
 
         if (meta != null) {
-            meta.setDisplayName("Sharpened Twig");
+            meta.setDisplayName("Sharpened Twig - Single hand");
             meta.setLore(List.of("Improvised small weapon","Nothing more than a stick sharpened with a stone."));
             meta.setCustomModelData(1);
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
