@@ -1,5 +1,6 @@
 package com.dark.arkasteinMMO.commands;
 
+import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CustomItems;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ArkasteinMMOCommands {
 
-    public static LiteralArgumentBuilder<CommandSourceStack> create(CustomItems customItems) {
+    public static LiteralArgumentBuilder<CommandSourceStack> create(CustomItems customItems, PortingMageManager mageManager) {
         return Commands.literal("arkastein")
                 .then(
                         Commands.literal("give")
@@ -43,6 +44,23 @@ public class ArkasteinMMOCommands {
                                                 })
                                 )
                                 .build()
+                )
+                .then(
+                        Commands.literal("spawnmage")
+                                .executes(ctx -> {
+                                    CommandSourceStack source = ctx.getSource();
+                                    if (!(source.getExecutor() instanceof Player player)) {
+                                        source.getSender().sendMessage(Component.text("Only players can use this command."));
+                                        return 1;
+                                    }
+
+                                    // Spawn the Porting Mage
+                                    mageManager.spawnPortingMage(player);
+                                    player.sendMessage(Component.text("A Porting Mage has appeared!"));
+                                    return 1;
+                                })
                 );
+
+
     }
 }

@@ -3,11 +3,9 @@ package com.dark.arkasteinMMO;
 import com.dark.arkasteinMMO.blocks.CookingPot;
 import com.dark.arkasteinMMO.blocks.CustomBlocks;
 import com.dark.arkasteinMMO.commands.ArkasteinMMOCommands;
+import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CustomItems;
-import com.dark.arkasteinMMO.listeners.CookingPotPlacementListener;
-import com.dark.arkasteinMMO.listeners.CustomFoodListener;
-import com.dark.arkasteinMMO.listeners.ItemEvents;
-import com.dark.arkasteinMMO.listeners.TwoHandedItemListener;
+import com.dark.arkasteinMMO.listeners.*;
 import com.dark.arkasteinMMO.recipes.DiamondLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.GoldLongSwordRecipe;
 import com.dark.arkasteinMMO.recipes.IronLongSwordRecipe;
@@ -24,6 +22,8 @@ public final class ArkasteinMMO extends JavaPlugin {
 
     public static NamespacedKey ISTWOHANDED;
     public static NamespacedKey ISCUSTOMFOOD;
+
+    private PortingMageManager mageManager;
     CookingPot cookingPotLogic = new CookingPot(this);
 
     @Override
@@ -31,9 +31,13 @@ public final class ArkasteinMMO extends JavaPlugin {
         ISTWOHANDED = new NamespacedKey(this, "istwohanded");
         ISCUSTOMFOOD = new NamespacedKey(this, "iscustomfood");
 
-        // Arkastein Items
+        // Arkastein Items and Blocks
         CustomItems items = new CustomItems(this);
         CustomBlocks blocks = new CustomBlocks(this);
+
+        // PortingMage
+        mageManager = new PortingMageManager(this, items);
+        new PortingMageEvents(mageManager, this);
 
         // Events
         getServer().getPluginManager().registerEvents(
@@ -52,7 +56,7 @@ public final class ArkasteinMMO extends JavaPlugin {
         // Commands
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             LiteralCommandNode<CommandSourceStack> node =
-                    ArkasteinMMOCommands.create(items).build();
+                    ArkasteinMMOCommands.create(items, mageManager).build();
             commands.registrar().register(node);
         });
 
@@ -64,8 +68,6 @@ public final class ArkasteinMMO extends JavaPlugin {
         new NetheriteLongSwordRecipe(getServer(), items).creatNetheriteLongSwordRecipe();
 
     }
-
-
 
     @Override
     public void onDisable() {
