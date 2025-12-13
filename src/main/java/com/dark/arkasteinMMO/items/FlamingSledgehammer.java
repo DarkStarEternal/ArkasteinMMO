@@ -1,5 +1,6 @@
 package com.dark.arkasteinMMO.items;
 
+import com.dark.arkasteinMMO.ArkasteinMMO;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -46,7 +47,7 @@ public class FlamingSledgehammer {
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
             meta.getPersistentDataContainer().set(
-                    new NamespacedKey(plugin, "flaming_sledgehammer"),
+                    ArkasteinMMO.ISTWOHANDED,
                     PersistentDataType.BYTE,
                     (byte) 1
             );

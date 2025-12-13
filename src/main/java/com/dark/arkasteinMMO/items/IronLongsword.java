@@ -1,5 +1,6 @@
 package com.dark.arkasteinMMO.items;
 
+import com.dark.arkasteinMMO.ArkasteinMMO;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
@@ -46,6 +47,11 @@ public class IronLongsword {
 
             meta.getPersistentDataContainer().set(
                     new NamespacedKey(plugin, "iron_longsword"),
+                    PersistentDataType.BYTE,
+                    (byte) 1
+            );
+            meta.getPersistentDataContainer().set(
+                    ArkasteinMMO.ISTWOHANDED,
                     PersistentDataType.BYTE,
                     (byte) 1
             );

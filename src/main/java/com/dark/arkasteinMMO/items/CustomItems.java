@@ -42,7 +42,7 @@ public class CustomItems {
     // Your existing creators
     public ItemStack createIronLongsword() { return new IronLongsword(plugin).IronLongswordItem(); }
     public ItemStack createGoldLongsword() { return new GoldLongsword(plugin).GoldLongSwordItem(); }
-    public ItemStack createDiamondLongsword() { return new DiamondLongsword(plugin).DiamondLongSwordItem(); }
+    public ItemStack createDiamondLongsword() { return new DiamondLongsword(plugin).getItem(); }
     public ItemStack createNetheriteLongsword() { return new NetheriteLongsword(plugin).NetheriteLongSwordItem(); }
     public ItemStack createFlamingSledgehammer() { return new FlamingSledgehammer(plugin).FlamnigSledgehammerItem(); }
     public ItemStack createSharpenedtwig() { return new Sharpenedtwig(plugin).SharpenedtwigItem(); }

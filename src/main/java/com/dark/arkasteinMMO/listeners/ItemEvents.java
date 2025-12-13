@@ -1,4 +1,4 @@
-package com.dark.arkasteinMMO.items;
+package com.dark.arkasteinMMO.listeners;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;

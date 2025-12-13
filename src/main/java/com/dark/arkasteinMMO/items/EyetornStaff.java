@@ -1,5 +1,6 @@
 package com.dark.arkasteinMMO.items;
 
+import com.dark.arkasteinMMO.ArkasteinMMO;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,7 @@ public class EyetornStaff {
             ));
             meta.setCustomModelData(2);
             meta.getPersistentDataContainer().set(
-                    new NamespacedKey(plugin, "eyetornstaff"),
+                    ArkasteinMMO.ISTWOHANDED,
                     PersistentDataType.BYTE,
                     (byte) 1
             );
