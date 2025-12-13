@@ -30,6 +30,11 @@ public class EyetornStaff {
             ));
             meta.setCustomModelData(2);
             meta.getPersistentDataContainer().set(
+                    new NamespacedKey(plugin, "iron_longsword"),
+                    PersistentDataType.BYTE,
+                    (byte) 1
+            );
+            meta.getPersistentDataContainer().set(
                     ArkasteinMMO.ISTWOHANDED,
                     PersistentDataType.BYTE,
                     (byte) 1

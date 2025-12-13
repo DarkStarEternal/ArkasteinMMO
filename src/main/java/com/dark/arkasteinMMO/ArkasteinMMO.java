@@ -1,7 +1,11 @@
 package com.dark.arkasteinMMO;
 
+import com.dark.arkasteinMMO.blocks.CookingPot;
+import com.dark.arkasteinMMO.blocks.CustomBlocks;
 import com.dark.arkasteinMMO.commands.ArkasteinMMOCommands;
 import com.dark.arkasteinMMO.items.CustomItems;
+import com.dark.arkasteinMMO.listeners.CookingPotPlacementListener;
+import com.dark.arkasteinMMO.listeners.CustomFoodListener;
 import com.dark.arkasteinMMO.listeners.ItemEvents;
 import com.dark.arkasteinMMO.listeners.TwoHandedItemListener;
 import com.dark.arkasteinMMO.recipes.DiamondLongSwordRecipe;
@@ -19,19 +23,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ArkasteinMMO extends JavaPlugin {
 
     public static NamespacedKey ISTWOHANDED;
+    public static NamespacedKey ISCUSTOMFOOD;
+    CookingPot cookingPotLogic = new CookingPot(this);
 
     @Override
     public void onEnable() {
         ISTWOHANDED = new NamespacedKey(this, "istwohanded");
-        // Plugin startup logic
+        ISCUSTOMFOOD = new NamespacedKey(this, "iscustomfood");
 
         // Arkastein Items
         CustomItems items = new CustomItems(this);
+        CustomBlocks blocks = new CustomBlocks(this);
 
         // Events
-        Bukkit.getPluginManager().registerEvents(new ItemEvents(this), this);
         getServer().getPluginManager().registerEvents(
                 new TwoHandedItemListener(this),
+                this
+        );
+        getServer().getPluginManager().registerEvents(
+                new CookingPotPlacementListener(this, cookingPotLogic),
+                this
+        );
+        getServer().getPluginManager().registerEvents(
+                new CustomFoodListener(this),
                 this
         );
 
@@ -55,6 +69,6 @@ public final class ArkasteinMMO extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        cookingPotLogic.saveCookingPots();
     }
 }

@@ -57,7 +57,12 @@ public class DiamondLongsword {
                 )
         );
 
-        // 🔑 Persistent data used to detect & remove from offhand
+        meta.getPersistentDataContainer().set(
+                new NamespacedKey(plugin, "diamond_longsword"),
+                PersistentDataType.BYTE,
+                (byte) 1
+        );
+
         meta.getPersistentDataContainer().set(
                 ArkasteinMMO.ISTWOHANDED,
                 PersistentDataType.BYTE,

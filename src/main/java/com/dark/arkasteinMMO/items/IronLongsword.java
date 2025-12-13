@@ -21,6 +21,7 @@ public class IronLongsword {
     public IronLongsword(JavaPlugin plugin) {
         this.plugin = plugin;
     }
+
     public ItemStack IronLongswordItem() {
         ItemStack item = new ItemStack(Material.IRON_SWORD);
         ItemMeta meta = item.getItemMeta();
