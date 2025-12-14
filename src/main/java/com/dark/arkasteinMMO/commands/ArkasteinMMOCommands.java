@@ -1,8 +1,10 @@
 package com.dark.arkasteinMMO.commands;
 
+import com.dark.arkasteinMMO.entities.KhyninManager;
 import com.dark.arkasteinMMO.entities.KhyninOverlordManager;
 import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CustomItems;
+import com.dark.arkasteinMMO.listeners.KhyninEvents;
 import com.dark.arkasteinMMO.listeners.KhyninOverlordEvents;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -63,7 +65,28 @@ public class ArkasteinMMOCommands {
                                     return 1;
                                 })
                 )
-                // Inside the create() method
+                .then(
+                        Commands.literal("spawnkhynin")
+                                .executes(ctx -> {
+                                    CommandSourceStack source = ctx.getSource();
+
+                                    if (!(source.getExecutor() instanceof Player player)) {
+                                        source.getSender().sendMessage(Component.text("Only players can use this command."));
+                                        return 1;
+                                    }
+
+                                    // Create manager and events
+                                    KhyninManager minionManager = new KhyninManager(plugin);
+                                    new KhyninEvents(minionManager, plugin);
+
+                                    // Spawn a wave of 5 minions at player's location
+                                    minionManager.spawnMinionWave(player.getLocation(), 5);
+
+                                    player.sendMessage(Component.text("Spawned 5 Khynin minions!"));
+                                    return 1;
+                                })
+                )
+
                 .then(
                         Commands.literal("spawnoverlord")
                                 .executes(ctx -> {
@@ -80,8 +103,5 @@ public class ArkasteinMMOCommands {
                                     return 1;
                                 })
                 );
-
-
-
     }
 }

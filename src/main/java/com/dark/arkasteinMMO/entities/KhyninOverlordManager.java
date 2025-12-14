@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -21,20 +22,36 @@ import java.util.Map;
 
 public class KhyninOverlordManager {
 
+    private static final double BOSSBAR_RANGE = 40.0;
+
+    public final NamespacedKey overlordProjectileKey;
+    public final NamespacedKey minionStepKey;
+
+
     private final JavaPlugin plugin;
     public final NamespacedKey overlordKey;
 
-    // Keep track of tasks and boss bars
-    private final Map<IronGolem, BukkitTask> overlordTasks = new HashMap<>();
+    private final Map<IronGolem, BukkitTask> shootingTasks = new HashMap<>();
+    private final Map<IronGolem, BukkitTask> updateTasks = new HashMap<>();
     private final Map<IronGolem, BossBar> bossBars = new HashMap<>();
 
     public KhyninOverlordManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.overlordKey = new NamespacedKey(plugin, "khynin_overlord");
+        this.overlordProjectileKey = new NamespacedKey(plugin, "khynin_projectile");
+        this.minionStepKey = new NamespacedKey(plugin, "khynin_minion_step");
+
+
     }
 
     public void spawnOverlord(Player player) {
         IronGolem overlord = player.getWorld().spawn(player.getLocation(), IronGolem.class);
+
+        overlord.getPersistentDataContainer().set(
+                minionStepKey,
+                PersistentDataType.INTEGER,
+                0
+        );
 
         // Tag for identification
         overlord.getPersistentDataContainer().set(overlordKey, PersistentDataType.BYTE, (byte)1);
@@ -60,32 +77,111 @@ public class KhyninOverlordManager {
                 return;
             }
 
-            // Update boss bar health
-            double healthPercent = overlord.getHealth() / overlord.getAttribute(Attribute.MAX_HEALTH).getValue();
-            bossBar.setProgress(Math.max(0, healthPercent));
-
-            // Find a nearby player to target
-            Player target = overlord.getNearbyEntities(10,10,10).stream()
+            Player target = overlord.getNearbyEntities(20, 10, 20).stream()
                     .filter(e -> e instanceof Player)
-                    .map(e -> (Player)e)
-                    .findFirst().orElse(null);
+                    .map(e -> (Player) e)
+                    .findFirst()
+                    .orElse(null);
+
+            if (target != null) {
+                overlord.setTarget(target);
+            }
 
             if (target != null) {
                 Snowball proj = overlord.getWorld().spawn(overlord.getEyeLocation(), Snowball.class);
-                proj.setVelocity(target.getLocation().toVector().subtract(overlord.getLocation().toVector()).normalize().multiply(1.0));
-                proj.setShooter(overlord);
-            }
-        }, 0L, 200L); // every second
 
-        overlordTasks.put(overlord, task);
+                proj.setItem(new ItemStack(Material.MUD));
+
+                proj.setVelocity(
+                        target.getEyeLocation()
+                                .toVector()
+                                .subtract(overlord.getEyeLocation().toVector())
+                                .normalize()
+                                .multiply(1.2)
+                );
+
+                proj.setShooter(overlord);
+
+                proj.getPersistentDataContainer().set(
+                        overlordProjectileKey,
+                        PersistentDataType.BYTE,
+                        (byte) 1
+                );
+
+            }
+        }, 0L, 200L); // every ten seconds
+
+        BukkitTask task2 = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            if (!overlord.isValid()) {
+                cancelOverlordTask(overlord);
+                return;
+            }
+
+            Player target = overlord.getNearbyEntities(20, 10, 20).stream()
+                    .filter(e -> e instanceof Player)
+                    .map(e -> (Player) e)
+                    .findFirst()
+                    .orElse(null);
+
+            if (target != null) {
+                overlord.setTarget(target);
+            }
+
+            double maxHealth = overlord.getAttribute(Attribute.MAX_HEALTH).getValue();
+            double currentHealth = overlord.getHealth();
+            double healthPercent = currentHealth / maxHealth;
+            bossBar.setProgress(Math.max(0.0, Math.min(1.0, healthPercent)));
+
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (!online.getWorld().equals(overlord.getWorld())) {
+                    bossBar.removePlayer(online);
+                    continue;
+                }
+
+                double distance = online.getLocation().distance(overlord.getLocation());
+                if (distance <= BOSSBAR_RANGE) {
+                    bossBar.addPlayer(online);
+                } else {
+                    bossBar.removePlayer(online);
+                }
+            }
+
+            int previousStep = overlord.getPersistentDataContainer().get(
+                    minionStepKey,
+                    PersistentDataType.INTEGER
+            );
+
+            int currentStep = (int) ((maxHealth - currentHealth) / 20);
+
+            if (currentStep > previousStep) {
+                int stepsToProcess = currentStep - previousStep;
+
+                for (int i = 0; i < stepsToProcess; i++) {
+                    KhyninManager.spawnMinionWave(overlord.getLocation(), 3);
+                }
+
+                overlord.getPersistentDataContainer().set(
+                        minionStepKey,
+                        PersistentDataType.INTEGER,
+                        currentStep
+                );
+            }
+
+        }, 0L, 2L);
+        shootingTasks.put(overlord, task);
+        updateTasks.put(overlord, task2);
 
         player.sendMessage(Component.text("A Khynin Overlord has spawned!"));
     }
 
     public void cancelOverlordTask(IronGolem overlord) {
-        if (overlordTasks.containsKey(overlord)) {
-            overlordTasks.get(overlord).cancel();
-            overlordTasks.remove(overlord);
+        if (shootingTasks.containsKey(overlord)) {
+            shootingTasks.get(overlord).cancel();
+            shootingTasks.remove(overlord);
+        }
+        if (updateTasks.containsKey(overlord)) {
+            updateTasks.get(overlord).cancel();
+            updateTasks.remove(overlord);
         }
         if (bossBars.containsKey(overlord)) {
             bossBars.get(overlord).removeAll();
