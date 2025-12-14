@@ -25,7 +25,6 @@ public class CustomItems {
         registry.put("glass_shank", this::createGlassShank);
         registry.put("shattered_staff", this::createShatteredStaff);
         registry.put("eyetorn_staff", this::createEyetornStaff);
-        registry.put("cooking_pot_item", this::createCookingPotItem);
         registry.put("beef_soup", this::createBeefSoup);
     }
 
@@ -47,6 +46,5 @@ public class CustomItems {
     public ItemStack createGlassShank() { return new GlassShank(plugin).GlassShankItem(); }
     public ItemStack createShatteredStaff() { return new ShatteredStaff(plugin).ShatteredStaffItem(); }
     public ItemStack createEyetornStaff() { return new EyetornStaff(plugin).EyetornStaffItem(); }
-    public ItemStack createCookingPotItem() { return new CookingPotItem(plugin).getItem(); }
     public ItemStack createBeefSoup() { return new BeefSoup(plugin).getItem(); }
 }

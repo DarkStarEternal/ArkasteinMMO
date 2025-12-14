@@ -1,7 +1,9 @@
 package com.dark.arkasteinMMO.commands;
 
+import com.dark.arkasteinMMO.entities.KhyninOverlordManager;
 import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CustomItems;
+import com.dark.arkasteinMMO.listeners.KhyninOverlordEvents;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -9,10 +11,11 @@ import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ArkasteinMMOCommands {
 
-    public static LiteralArgumentBuilder<CommandSourceStack> create(CustomItems customItems, PortingMageManager mageManager) {
+    public static LiteralArgumentBuilder<CommandSourceStack> create(CustomItems customItems, PortingMageManager mageManager, JavaPlugin plugin) {
         return Commands.literal("arkastein")
                 .then(
                         Commands.literal("give")
@@ -59,7 +62,25 @@ public class ArkasteinMMOCommands {
                                     player.sendMessage(Component.text("A Porting Mage has appeared!"));
                                     return 1;
                                 })
+                )
+                // Inside the create() method
+                .then(
+                        Commands.literal("spawnoverlord")
+                                .executes(ctx -> {
+                                    CommandSourceStack source = ctx.getSource();
+                                    if (!(source.getExecutor() instanceof Player player)) {
+                                        source.getSender().sendMessage(Component.text("Only players can use this command."));
+                                        return 1;
+                                    }
+
+                                    // Spawn the overlord
+                                    KhyninOverlordManager overlordManager = new KhyninOverlordManager(plugin);
+                                    new KhyninOverlordEvents(overlordManager, plugin);
+                                    overlordManager.spawnOverlord(player);
+                                    return 1;
+                                })
                 );
+
 
 
     }

@@ -31,7 +31,7 @@ public class BeefSoup {
         // Display
         meta.setDisplayName("§bBeef Soup");
         meta.setLore(List.of(
-                "§7Cooked Food - Two-handed"
+                "§bCooked Food"
         ));
         meta.setCustomModelData(1);
 

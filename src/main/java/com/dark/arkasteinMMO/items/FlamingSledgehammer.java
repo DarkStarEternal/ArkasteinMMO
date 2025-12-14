@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -27,16 +28,17 @@ public class FlamingSledgehammer {
         ItemMeta meta = item.getItemMeta();
 
         AttributeModifier damageModifier = new AttributeModifier(
-                UUID.randomUUID(),
-                "generic.attackDamage",
-                38.0,
-                AttributeModifier.Operation.ADD_NUMBER
+                new NamespacedKey(plugin, "flaming_sledgehammer_damage"),
+                30.0,
+                AttributeModifier.Operation.ADD_NUMBER,
+                EquipmentSlotGroup.HAND
         );
+
         AttributeModifier speedModifier = new AttributeModifier(
-                UUID.randomUUID(),
-                "generic.attackSpeed",
+                new NamespacedKey(plugin, "flaming_sledgehammer_speed"),
                 -0.3,
-                AttributeModifier.Operation.ADD_NUMBER
+                AttributeModifier.Operation.ADD_NUMBER,
+                EquipmentSlotGroup.HAND
         );
 
         if (meta != null) {
@@ -49,6 +51,10 @@ public class FlamingSledgehammer {
             meta.setCustomModelData(1);
             meta.addEnchant(Enchantment.MENDING, 1,true);
             meta.addEnchant(Enchantment.FIRE_ASPECT, 2,true);
+
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 

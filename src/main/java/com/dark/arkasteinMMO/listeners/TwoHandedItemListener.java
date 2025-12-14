@@ -1,101 +1,84 @@
 package com.dark.arkasteinMMO.listeners;
 
 import com.dark.arkasteinMMO.ArkasteinMMO;
-import com.dark.arkasteinMMO.items.DiamondLongsword;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class TwoHandedItemListener implements Listener {
 
-    private final JavaPlugin plugin;
-
-    public TwoHandedItemListener(JavaPlugin plugin) {
-        this.plugin = plugin;
+    private boolean isTwoHanded(ItemStack item) {
+        if (item == null || item.getType().isAir()) return false;
+        if (!item.hasItemMeta()) return false;
+        return item.getItemMeta().getPersistentDataContainer()
+                .has(ArkasteinMMO.ISTWOHANDED, org.bukkit.persistence.PersistentDataType.BYTE);
     }
 
-    @EventHandler
-    public void onOffhandSwap(PlayerSwapHandItemsEvent event) {
-        ItemStack offhand = event.getOffHandItem();
-
-        if (offhand == null || offhand.getType().isAir()) return;
-
-        ItemMeta meta = offhand.getItemMeta();
-        if (meta == null) return;
-
-        if (meta.getPersistentDataContainer().has(
-                ArkasteinMMO.ISTWOHANDED,
-                PersistentDataType.BYTE
-        )) {
-            // Remove the longsword from offhand
-            event.getPlayer().getInventory().setItemInOffHand(null);
-
-            // Prevent the swap action
-            event.setCancelled(true);
+    private void handleOffhand(Player player) {
+        ItemStack offhand = player.getInventory().getItemInOffHand();
+        if (offhand != null && !offhand.getType().isAir()) {
+            int emptySlot = player.getInventory().firstEmpty();
+            if (emptySlot != -1) {
+                player.getInventory().setItem(emptySlot, offhand);
+            } else {
+                player.getWorld().dropItemNaturally(player.getLocation(), offhand);
+            }
+            player.getInventory().setItemInOffHand(null);
         }
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.OFF_HAND) return;
-
-        ItemStack mainHand = event.getPlayer().getInventory().getItemInMainHand();
-        if (mainHand == null || mainHand.getType().isAir()) return;
-
-        ItemMeta meta = mainHand.getItemMeta();
-        if (meta == null) return;
-
-        if (meta.getPersistentDataContainer().has(
-                ArkasteinMMO.ISTWOHANDED,
-                PersistentDataType.BYTE
-        )) {
-            // Cancel offhand usage entirely
-            event.setCancelled(true);
+    public void onSwapHand(PlayerSwapHandItemsEvent event) {
+        Player player = event.getPlayer();
+        if (isTwoHanded(player.getInventory().getItemInMainHand())) {
+            event.setCancelled(true); // block swap
         }
     }
 
     @EventHandler
-    public void onShieldBlock(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player player)) return;
-
-        ItemStack mainHand = player.getInventory().getItemInMainHand();
-        if (mainHand == null || mainHand.getType().isAir()) return;
-
-        ItemMeta meta = mainHand.getItemMeta();
-        if (meta == null) return;
-
-        if (meta.getPersistentDataContainer().has(
-                ArkasteinMMO.ISTWOHANDED,
-                PersistentDataType.BYTE
-        )) {
-            // Prevent shield blocking
-            event.setDamage(event.getFinalDamage());
+    public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (event.getHand() == EquipmentSlot.OFF_HAND && isTwoHanded(player.getInventory().getItemInMainHand())) {
+            event.setCancelled(true); // block offhand usage
         }
     }
-
 
     @EventHandler
     public void onItemHeld(PlayerItemHeldEvent event) {
-        ItemStack mainHand = event.getPlayer().getInventory().getItem(event.getNewSlot());
-        if (mainHand == null || mainHand.getType().isAir()) return;
+        Player player = event.getPlayer();
+        ItemStack newMainHand = player.getInventory().getItem(event.getNewSlot());
+        if (isTwoHanded(newMainHand)) {
+            handleOffhand(player);
+        }
+    }
 
-        ItemMeta meta = mainHand.getItemMeta();
-        if (meta == null) return;
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (isTwoHanded(mainHand)) {
+            handleOffhand(player);
+        }
+    }
 
-        if (meta.getPersistentDataContainer().has(
-                ArkasteinMMO.ISTWOHANDED,
-                PersistentDataType.BYTE
-        )) {
-            event.getPlayer().getInventory().setItemInOffHand(null);
+    @EventHandler
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (isTwoHanded(mainHand)) {
+            ItemStack offhand = player.getInventory().getItemInOffHand();
+            if (offhand != null && offhand.getType() == Material.SHIELD) {
+                handleOffhand(player); // move or drop shield
+            }
         }
     }
 }

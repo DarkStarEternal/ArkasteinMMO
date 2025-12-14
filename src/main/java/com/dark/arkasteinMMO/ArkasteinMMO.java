@@ -1,7 +1,5 @@
 package com.dark.arkasteinMMO;
 
-import com.dark.arkasteinMMO.blocks.CookingPot;
-import com.dark.arkasteinMMO.blocks.CustomBlocks;
 import com.dark.arkasteinMMO.commands.ArkasteinMMOCommands;
 import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CustomItems;
@@ -13,7 +11,6 @@ import com.dark.arkasteinMMO.recipes.NetheriteLongSwordRecipe;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +21,6 @@ public final class ArkasteinMMO extends JavaPlugin {
     public static NamespacedKey ISCUSTOMFOOD;
 
     private PortingMageManager mageManager;
-    CookingPot cookingPotLogic = new CookingPot(this);
 
     @Override
     public void onEnable() {
@@ -33,7 +29,6 @@ public final class ArkasteinMMO extends JavaPlugin {
 
         // Arkastein Items and Blocks
         CustomItems items = new CustomItems(this);
-        CustomBlocks blocks = new CustomBlocks(this);
 
         // PortingMage
         mageManager = new PortingMageManager(this, items);
@@ -41,11 +36,7 @@ public final class ArkasteinMMO extends JavaPlugin {
 
         // Events
         getServer().getPluginManager().registerEvents(
-                new TwoHandedItemListener(this),
-                this
-        );
-        getServer().getPluginManager().registerEvents(
-                new CookingPotPlacementListener(this, cookingPotLogic),
+                new TwoHandedItemListener(),
                 this
         );
         getServer().getPluginManager().registerEvents(
@@ -56,7 +47,7 @@ public final class ArkasteinMMO extends JavaPlugin {
         // Commands
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
             LiteralCommandNode<CommandSourceStack> node =
-                    ArkasteinMMOCommands.create(items, mageManager).build();
+                    ArkasteinMMOCommands.create(items, mageManager, this).build();
             commands.registrar().register(node);
         });
 
@@ -71,6 +62,6 @@ public final class ArkasteinMMO extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        cookingPotLogic.saveCookingPots();
+        ;
     }
 }

@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -24,16 +25,17 @@ public class GlassShank {
         ItemMeta meta = item.getItemMeta();
 
         AttributeModifier damageModifier = new AttributeModifier(
-                UUID.randomUUID(),
-                "generic.attackDamage",
-                -6.0,
-                AttributeModifier.Operation.ADD_NUMBER
+                new NamespacedKey(plugin, "glass_shank_damage"),
+                5,
+                AttributeModifier.Operation.ADD_NUMBER,
+                EquipmentSlotGroup.HAND
         );
+
         AttributeModifier speedModifier = new AttributeModifier(
-                UUID.randomUUID(),
-                "generic.attackSpeed",
-                1.7,
-                AttributeModifier.Operation.ADD_NUMBER
+                new NamespacedKey(plugin, "glass_shank_speed"),
+                1.9,
+                AttributeModifier.Operation.ADD_NUMBER,
+                EquipmentSlotGroup.HAND
         );
 
         if (meta != null) {
@@ -45,6 +47,10 @@ public class GlassShank {
                     "Cracked: May cause bleed damage to hit enemies at the cost of five durablity."
             ));
             meta.setCustomModelData(1);
+
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
             meta.getPersistentDataContainer().set(
