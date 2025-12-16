@@ -52,7 +52,6 @@ public class PortingMageManager {
         recipe1.addIngredient(emeralds1);
         trades.add(recipe1);
 
-
         ItemStack emeralds2 = new ItemStack(Material.EMERALD, 64);
         ItemStack blazerod1 = new ItemStack(Material.BLAZE_ROD, 4);
         ItemStack flamingsledgehammer = items.createFlamingSledgehammer();
@@ -60,6 +59,30 @@ public class PortingMageManager {
         recipe2.addIngredient(emeralds2);
         recipe2.addIngredient(blazerod1);
         trades.add(recipe2);
+
+        ItemStack emeralds3 = new ItemStack(Material.EMERALD, 7);
+        ItemStack leatherHelmet = new ItemStack(Material.LEATHER_HELMET, 1);
+        ItemStack mageHood = items.createMageHood();
+        MerchantRecipe recipe3 = new MerchantRecipe(mageHood, 1);
+        recipe3.addIngredient(emeralds3);
+        recipe3.addIngredient(leatherHelmet);
+        trades.add(recipe3);
+
+        ItemStack emeralds4 = new ItemStack(Material.EMERALD, 7);
+        ItemStack leatherChestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+        ItemStack mageRobe = items.createMageRobe();
+        MerchantRecipe recipe4 = new MerchantRecipe(mageRobe, 1);
+        recipe4.addIngredient(emeralds4);
+        recipe4.addIngredient(leatherChestplate);
+        trades.add(recipe4);
+
+        ItemStack emeralds5 = new ItemStack(Material.EMERALD, 7);
+        ItemStack leatherLeggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+        ItemStack magePants = items.createMagePants();
+        MerchantRecipe recipe5 = new MerchantRecipe(magePants, 1);
+        recipe5.addIngredient(emeralds5);
+        recipe5.addIngredient(leatherLeggings);
+        trades.add(recipe4);
 
         return trades;
     }

@@ -20,12 +20,24 @@ public class CustomItems {
         registry.put("gold_longsword", this::createGoldLongsword);
         registry.put("diamond_longsword", this::createDiamondLongsword);
         registry.put("netherite_longsword", this::createNetheriteLongsword);
+
         registry.put("flaming_sledgehammer", this::createFlamingSledgehammer);
+
         registry.put("sharpened_twig", this::createSharpenedtwig);
         registry.put("glass_shank", this::createGlassShank);
         registry.put("shattered_staff", this::createShatteredStaff);
+
         registry.put("eyetorn_staff", this::createEyetornStaff);
+
+        registry.put("cragan_longbow", this::createCraganLongBow);
+
         registry.put("beef_soup", this::createBeefSoup);
+
+        registry.put("quickfire_crossbow", this::createQuickFireCrossbow);
+
+        registry.put("mage_hood", this::createMageHood);
+        registry.put("mage_robe", this::createMageRobe);
+        registry.put("mage_pants", this::createMagePants);
     }
 
     public ItemStack get(String key) {
@@ -47,4 +59,9 @@ public class CustomItems {
     public ItemStack createShatteredStaff() { return new ShatteredStaff(plugin).ShatteredStaffItem(); }
     public ItemStack createEyetornStaff() { return new EyetornStaff(plugin).EyetornStaffItem(); }
     public ItemStack createBeefSoup() { return new BeefSoup(plugin).getItem(); }
+    public ItemStack createMageHood() { return new MageHood(plugin).MageHoodItem(); }
+    public ItemStack createMageRobe() { return new MageRobe(plugin).MageRobeItem(); }
+    public ItemStack createMagePants() { return new MagePants(plugin).MagePantsItem(); }
+    public ItemStack createCraganLongBow() { return new CraganLongBow(plugin).CraganLongBowItem(); }
+    public ItemStack createQuickFireCrossbow() { return new QuickFiringCrossbow(plugin).item(); }
 }

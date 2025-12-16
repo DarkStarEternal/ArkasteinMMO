@@ -30,7 +30,7 @@ public class EyetornStaff {
             ));
             meta.setCustomModelData(2);
             meta.getPersistentDataContainer().set(
-                    new NamespacedKey(plugin, "iron_longsword"),
+                    new NamespacedKey(plugin, "eyetorn_staff"),
                     PersistentDataType.BYTE,
                     (byte) 1
             );
