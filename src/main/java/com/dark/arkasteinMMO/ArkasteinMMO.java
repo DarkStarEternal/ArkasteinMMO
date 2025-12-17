@@ -18,7 +18,9 @@ public final class ArkasteinMMO extends JavaPlugin {
     public static NamespacedKey ISTWOHANDED;
     public static NamespacedKey ISLONGBOW;
     public static NamespacedKey ISQUICKFIRE;
+    public static NamespacedKey ISSHOTGUNLIKE;
     public static NamespacedKey STORED_SHOTS_KEY;
+    public static NamespacedKey ISBURSTARROW;
 
     public static NamespacedKey ISCUSTOMFOOD;
 
@@ -37,6 +39,8 @@ public final class ArkasteinMMO extends JavaPlugin {
         ISTWOHANDED = new NamespacedKey(this, "istwohanded");
         ISLONGBOW = new NamespacedKey(this, "islongbow");
         ISCUSTOMFOOD = new NamespacedKey(this, "iscustomfood");
+        ISSHOTGUNLIKE = new NamespacedKey(this, "isshotgunlike");
+        ISBURSTARROW = new NamespacedKey(this, "isburstarrow");
         MAX_CUSTOM_DURABILITY = new NamespacedKey(this, "maxcustomdurability");
         CUSTOM_DURABILITY = new NamespacedKey(this, "customdurability");
         MAGE_ROBE_PIECE = new NamespacedKey(this, "magerobepiece");
@@ -57,10 +61,13 @@ public final class ArkasteinMMO extends JavaPlugin {
                 this
         );
         getServer().getPluginManager().registerEvents(
-                new QuickFiringCrossbowEvents(this),
+                new QuickFiringCrossbowEvents(),
                 this
         );
-
+        getServer().getPluginManager().registerEvents(
+                new ShieldbreakCrossbowEvents(),
+                this
+        );
         getServer().getPluginManager().registerEvents(
                 new MageRobeEvents(),
                 this
@@ -96,6 +103,7 @@ public final class ArkasteinMMO extends JavaPlugin {
         new CraganLongBowRecipe(getServer(), items).createCraganLongBowRecipe();
 
         new QuickFiringCrossbowRecipe(getServer(), items).createQuickFiringCrossbowRecipe();
+        new ShieldbreakerCrossbowRecipe(getServer(), items).createShieldbreakerCrossbowRecipe();
 
         new SharpenedTwigRecipe(getServer(), items).createSharpenedTwigRecipe();
     }

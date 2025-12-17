@@ -34,6 +34,7 @@ public class CustomItems {
         registry.put("beef_soup", this::createBeefSoup);
 
         registry.put("quickfire_crossbow", this::createQuickFireCrossbow);
+        registry.put("shieldbreaker_crossbow", this::createShieldbreakerCrossbow);
 
         registry.put("mage_hood", this::createMageHood);
         registry.put("mage_robe", this::createMageRobe);
@@ -64,4 +65,5 @@ public class CustomItems {
     public ItemStack createMagePants() { return new MagePants(plugin).MagePantsItem(); }
     public ItemStack createCraganLongBow() { return new CraganLongBow(plugin).CraganLongBowItem(); }
     public ItemStack createQuickFireCrossbow() { return new QuickFiringCrossbow(plugin).item(); }
+    public ItemStack createShieldbreakerCrossbow() { return new ShieldbreakCrossbow(plugin).item(); }
 }

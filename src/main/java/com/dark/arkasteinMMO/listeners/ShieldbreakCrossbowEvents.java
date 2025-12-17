@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-public class QuickFiringCrossbowEvents implements Listener {
+public class ShieldbreakCrossbowEvents implements Listener {
 
     /* ===========================
        LOADING MECHANIC
@@ -34,7 +34,7 @@ public class QuickFiringCrossbowEvents implements Listener {
         ItemMeta meta = item.getItemMeta();
         var pdc = meta.getPersistentDataContainer();
 
-        if (!pdc.has(ArkasteinMMO.ISQUICKFIRE, PersistentDataType.BYTE)) return;
+        if (!pdc.has(ArkasteinMMO.ISSHOTGUNLIKE, PersistentDataType.BYTE)) return;
 
         int shots = pdc.getOrDefault(
                 ArkasteinMMO.STORED_SHOTS_KEY,
@@ -68,7 +68,7 @@ public class QuickFiringCrossbowEvents implements Listener {
         ItemMeta meta = bow.getItemMeta();
         var pdc = meta.getPersistentDataContainer();
 
-        if (!pdc.has(ArkasteinMMO.ISQUICKFIRE, PersistentDataType.BYTE)) return;
+        if (!pdc.has(ArkasteinMMO.ISSHOTGUNLIKE, PersistentDataType.BYTE)) return;
 
         int shots = pdc.getOrDefault(
                 ArkasteinMMO.STORED_SHOTS_KEY,
@@ -96,8 +96,9 @@ public class QuickFiringCrossbowEvents implements Listener {
                     randomSpread()
             ));
 
-            arrow.setVelocity(spread.multiply(1.2));
+            arrow.setVelocity(spread.multiply(2.6));
             arrow.setShooter(player);
+            arrow.setPierceLevel(1);
             arrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
 
             // 🔑 Mark arrow as burst arrow
