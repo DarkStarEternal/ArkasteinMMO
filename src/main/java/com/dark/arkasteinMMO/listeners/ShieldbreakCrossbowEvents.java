@@ -91,9 +91,9 @@ public class ShieldbreakCrossbowEvents implements Listener {
             );
 
             Vector spread = baseVelocity.clone().add(new Vector(
-                    randomSpread(),
-                    randomSpread(),
-                    randomSpread()
+                    randomSpread1(),
+                    randomSpread2(),
+                    randomSpread3()
             ));
 
             arrow.setVelocity(spread.multiply(2.6));
@@ -146,7 +146,13 @@ public class ShieldbreakCrossbowEvents implements Listener {
         arrow.remove();
     }
 
-    private double randomSpread() {
+    private double randomSpread1() {
         return (Math.random() - 0.5) * 0.08;
+    }
+    private double randomSpread2() {
+        return (Math.random() + 0.5) * 0.008;
+    }
+    private double randomSpread3() {
+        return (Math.random() - 0.7) * 0.14;
     }
 }

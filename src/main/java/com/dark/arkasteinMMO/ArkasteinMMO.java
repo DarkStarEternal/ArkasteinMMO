@@ -86,10 +86,6 @@ public final class ArkasteinMMO extends JavaPlugin {
                 this
         );
         getServer().getPluginManager().registerEvents(
-                new CustomFoodListener(this),
-                this
-        );
-        getServer().getPluginManager().registerEvents(
                 new GlassBreakingListener(items),
                 this
         );
