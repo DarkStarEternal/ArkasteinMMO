@@ -24,11 +24,11 @@ public class MageHood extends MageRobePiece {
         return create(
                 Material.LEATHER_HELMET,
                 "Mage Hood",
-                List.of("Magical Armor - Helmet", "Light equipment worn by mages."),
+                List.of("Magical Armor - Hood", "Light equipment worn by mages."),
                 1001,
                 3,
                 EquipmentSlotGroup.HEAD,
-                205
+                105
         );
     }
 }

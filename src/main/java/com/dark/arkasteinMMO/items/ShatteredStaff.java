@@ -26,7 +26,7 @@ public class ShatteredStaff {
         if (meta != null) {
             meta.setDisplayName("Shattered Staff");
             meta.setLore(List.of(
-                    "Improvised small staff - Single hand",
+                    "Magical Improvised Small Staff - Single hand",
                     "This staff is just a part of what it once was. Maybe it can be reassembled.",
                     "Abilities:",
                     "Shattered: Can be combined with a fitting missing piece to restore its former glory"

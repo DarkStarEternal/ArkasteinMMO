@@ -12,29 +12,28 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
-import java.util.UUID;
 
-public class DiamondLongsword {
+public class RoyalGuardsZweihander {
 
     private final JavaPlugin plugin;
 
-    public DiamondLongsword(JavaPlugin plugin) {
+    public RoyalGuardsZweihander(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     public ItemStack getItem() {
-        ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
+        ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
         ItemMeta meta = item.getItemMeta();
 
         AttributeModifier damageModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "diamond_longsword_damage"),
+                new NamespacedKey(plugin, "royal_zweihänder_damage"),
                 10,
                 AttributeModifier.Operation.ADD_NUMBER,
                 EquipmentSlotGroup.HAND
         );
 
         AttributeModifier speedModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "diamond_longsword_speed"),
+                new NamespacedKey(plugin, "royal_zweihänder_speed"),
                 0.2,
                 AttributeModifier.Operation.ADD_NUMBER,
                 EquipmentSlotGroup.HAND
@@ -43,12 +42,12 @@ public class DiamondLongsword {
         if (meta == null) return item;
 
         // Display
-        meta.setDisplayName("§bDiamond Longsword");
+        meta.setDisplayName("Royal Zweihänder");
         meta.setLore(List.of(
-                "§7Longsword - Two-handed",
-                "Longer than a normal sword, this weapon should rather not be used in crowded spaces."
+                "Legendary Zweihänder - Two-handed",
+                "Used by Orrenveils Palace guards, this weapon is strong, intimidating and packs quite the punch"
         ));
-        meta.setCustomModelData(1);
+        meta.setCustomModelData(19);
 
         meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
         meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
@@ -57,7 +56,7 @@ public class DiamondLongsword {
         meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 
         meta.getPersistentDataContainer().set(
-                new NamespacedKey(plugin, "diamond_longsword"),
+                new NamespacedKey(plugin, "royal_zweihänder"),
                 PersistentDataType.BYTE,
                 (byte) 1
         );

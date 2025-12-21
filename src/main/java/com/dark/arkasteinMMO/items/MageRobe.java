@@ -18,11 +18,13 @@ public class MageRobe extends MageRobePiece{
         return create(
                 Material.LEATHER_CHESTPLATE,
                 "Mage Robe",
-                List.of("Magical Armor - Robe", "Light equipment worn by mages."),
+                List.of("Magical Armor - Robe",
+                        "Light equipment worn by mages."
+                ),
                 1001,
                 5,
-                EquipmentSlotGroup.HEAD,
-                265
+                EquipmentSlotGroup.BODY,
+                165
         );
     }
 }

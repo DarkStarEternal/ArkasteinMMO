@@ -21,8 +21,8 @@ public class MagePants extends MageRobePiece{
                 List.of("Magical Armor - Pants", "Light equipment worn by mages."),
                 1001,
                 4,
-                EquipmentSlotGroup.HEAD,
-                225
+                EquipmentSlotGroup.LEGS,
+                155
         );
     }
 }

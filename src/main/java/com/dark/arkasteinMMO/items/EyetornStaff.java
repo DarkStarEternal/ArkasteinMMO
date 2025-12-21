@@ -24,7 +24,7 @@ public class EyetornStaff {
         if (meta != null) {
             meta.setDisplayName("Eyetorn Staff");
             meta.setLore(List.of(
-                    "Staff - Dual hand",
+                    "Legendary Magical Staff - Dual hand",
                     "The eye torn out of a giants skull, now enhancing spells cast by this bloody weapon",
                     "Abilities:"
             ));
