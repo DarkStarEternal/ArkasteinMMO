@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,16 +32,18 @@ public class IronLongsword {
 
         try {
             AttributeModifier damageModifier = new AttributeModifier(
-                    new NamespacedKey(plugin, "iron_longsword_damage"),
-                    9,
+                    UUID.randomUUID(),
+                    "iron_longsword_damage",
+                    8.0,
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlotGroup.HAND
+                    EquipmentSlot.HAND
             );
             AttributeModifier speedModifier = new AttributeModifier(
-                    new NamespacedKey(plugin, "iron_longsword_speed"),
+                    UUID.randomUUID(),
+                    "iron_longsword_speed",
                     0.3,
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlotGroup.HAND
+                    EquipmentSlot.HAND
             );
 
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);

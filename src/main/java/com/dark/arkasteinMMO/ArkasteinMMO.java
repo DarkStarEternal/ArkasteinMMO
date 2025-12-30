@@ -1,6 +1,8 @@
 package com.dark.arkasteinMMO;
 
 import com.dark.arkasteinMMO.commands.ArkasteinMMOCommands;
+import com.dark.arkasteinMMO.entities.CraganKnightManager;
+import com.dark.arkasteinMMO.entities.CraganRiderManager;
 import com.dark.arkasteinMMO.entities.PortingMageManager;
 import com.dark.arkasteinMMO.items.CraganGladius;
 import com.dark.arkasteinMMO.items.CustomItems;
@@ -60,6 +62,9 @@ public final class ArkasteinMMO extends JavaPlugin {
         // Arkastein Items and Blocks
         CustomItems items = new CustomItems(this);
 
+        CraganKnightManager knightManager = new CraganKnightManager(items, this);
+        CraganRiderManager riderManager = new CraganRiderManager(items, this);
+
         // PortingMage
         mageManager = new PortingMageManager(this, items);
         new PortingMageEvents(mageManager, this);
@@ -100,6 +105,12 @@ public final class ArkasteinMMO extends JavaPlugin {
         getServer().getPluginManager().registerEvents(
                 new RoyalArmorEvents(),
                 this
+        );
+        getServer().getPluginManager().registerEvents(
+                new CraganKnightEvents(knightManager, this), this
+        );
+        getServer().getPluginManager().registerEvents(
+                new CraganRiderEvents(riderManager), this
         );
 
 
