@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ExecutionersHellbarde {
     JavaPlugin plugin;
@@ -27,17 +29,22 @@ public class ExecutionersHellbarde {
 
         try {
             AttributeModifier damageModifier = new AttributeModifier(
-                    new NamespacedKey(plugin, "executioners_hellbarde_damage"),
-                    9,
+                    UUID.randomUUID(),
+                    "executioners_hellbarde_damage",
+                    9.0,
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlotGroup.HAND
+                    EquipmentSlot.HAND
             );
             AttributeModifier speedModifier = new AttributeModifier(
-                    new NamespacedKey(plugin, "executioners_hellbarde_speed"),
-                    -0.1,
+                    UUID.randomUUID(),
+                    "executioners_hellbarde_speed",
+                    -0.3,
                     AttributeModifier.Operation.ADD_NUMBER,
-                    EquipmentSlotGroup.HAND
+                    EquipmentSlot.HAND
             );
+
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
 
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);

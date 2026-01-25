@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,19 +28,31 @@ public class FlamingSledgehammer {
         ItemStack item = new ItemStack(Material.DIAMOND_AXE);
         ItemMeta meta = item.getItemMeta();
 
-        AttributeModifier damageModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "flaming_sledgehammer_damage"),
-                30.0,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+        try {
+            AttributeModifier damageModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "flaming_hammer_damage",
+                    35.4,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
+            AttributeModifier speedModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "flaming_hammer_speed",
+                    -0.6,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
 
-        AttributeModifier speedModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "flaming_sledgehammer_speed"),
-                -0.3,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+
+            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
+            meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (meta != null) {
             meta.setDisplayName("Flaming Sledgehammer");
@@ -51,12 +64,6 @@ public class FlamingSledgehammer {
             meta.setCustomModelData(1);
             meta.addEnchant(Enchantment.MENDING, 1,true);
             meta.addEnchant(Enchantment.FIRE_ASPECT, 2,true);
-
-            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
-            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
-
-            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
-            meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 
             meta.getPersistentDataContainer().set(
                     new NamespacedKey(plugin, "flamingsledgehammer"),

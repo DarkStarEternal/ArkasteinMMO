@@ -13,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public abstract class RoyalArmorPiece {
     protected final JavaPlugin plugin;
@@ -41,7 +42,8 @@ public abstract class RoyalArmorPiece {
         meta.addAttributeModifier(
                 Attribute.ARMOR,
                 new AttributeModifier(
-                        new NamespacedKey(plugin, name.toLowerCase().replace(" ", "_") + "_armor"),
+                        UUID.randomUUID(),
+                        name.toLowerCase().replace(" ", "_") + "_armor",
                         armor,
                         AttributeModifier.Operation.ADD_NUMBER,
                         slot

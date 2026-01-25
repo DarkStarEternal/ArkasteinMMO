@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,6 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RoyalGuardsZweihander {
 
@@ -25,20 +27,31 @@ public class RoyalGuardsZweihander {
         ItemStack item = new ItemStack(Material.NETHERITE_SWORD);
         ItemMeta meta = item.getItemMeta();
 
-        AttributeModifier damageModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "royal_zweihänder_damage"),
-                10,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+        try {
+            AttributeModifier damageModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "royal_zweihander_damage",
+                    21.6,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
+            AttributeModifier speedModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "royal_zweihander_speed",
+                    -0.1,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
 
-        AttributeModifier speedModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "royal_zweihänder_speed"),
-                0.2,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
 
+            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
+            meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (meta == null) return item;
 
         // Display
@@ -48,12 +61,6 @@ public class RoyalGuardsZweihander {
                 "Used by Orrenveils Palace guards, this weapon is strong, intimidating and packs quite the punch"
         ));
         meta.setCustomModelData(19);
-
-        meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
-        meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
-
-        meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
-        meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 
         meta.getPersistentDataContainer().set(
                 new NamespacedKey(plugin, "royal_zweihänder"),

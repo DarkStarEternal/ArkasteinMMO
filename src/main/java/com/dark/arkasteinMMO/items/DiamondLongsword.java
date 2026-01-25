@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,19 +27,31 @@ public class DiamondLongsword {
         ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta meta = item.getItemMeta();
 
-        AttributeModifier damageModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "diamond_longsword_damage"),
-                10,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+        try {
+            AttributeModifier damageModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "diamond_longsword_damage",
+                    9.0,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
+            AttributeModifier speedModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "diamond_longsword_speed",
+                    0.4,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
 
-        AttributeModifier speedModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "diamond_longsword_speed"),
-                0.2,
-                AttributeModifier.Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+
+            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
+            meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (meta == null) return item;
 
@@ -49,12 +62,6 @@ public class DiamondLongsword {
                 "Longer than a normal sword, this weapon should rather not be used in crowded spaces."
         ));
         meta.setCustomModelData(1);
-
-        meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
-        meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
-
-        meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
-        meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 
         meta.getPersistentDataContainer().set(
                 new NamespacedKey(plugin, "diamond_longsword"),

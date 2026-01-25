@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GoldLongsword {
 
@@ -28,19 +30,31 @@ public class GoldLongsword {
 
         if (meta == null) return item;
 
-        AttributeModifier damageModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "gold_longsword_damage"),
-                9,
-                Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+        try {
+            AttributeModifier damageModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "gold_longsword_damage",
+                    6.0,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
+            AttributeModifier speedModifier = new AttributeModifier(
+                    UUID.randomUUID(),
+                    "gold_longsword_speed",
+                    -0.4,
+                    AttributeModifier.Operation.ADD_NUMBER,
+                    EquipmentSlot.HAND
+            );
 
-        AttributeModifier speedModifier = new AttributeModifier(
-                new NamespacedKey(plugin, "gold_longsword_speed"),
-                -0.1,
-                Operation.ADD_NUMBER,
-                EquipmentSlotGroup.HAND
-        );
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+
+            meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
+            meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         meta.setDisplayName("Gold Longsword");
         meta.setLore(List.of(
@@ -48,12 +62,6 @@ public class GoldLongsword {
                 "Longer than a normal sword, this weapon should rather not be used in crowded spaces."
         ));
         meta.setCustomModelData(1);
-
-        meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
-        meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
-
-        meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
-        meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);
 
         meta.getPersistentDataContainer().set(
                 new NamespacedKey(plugin, "gold_longsword"),

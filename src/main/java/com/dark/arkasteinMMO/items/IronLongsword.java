@@ -41,10 +41,13 @@ public class IronLongsword {
             AttributeModifier speedModifier = new AttributeModifier(
                     UUID.randomUUID(),
                     "iron_longsword_speed",
-                    0.3,
+                    -0.3,
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlot.HAND
             );
+
+            meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+            meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
 
             meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier);
             meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier);

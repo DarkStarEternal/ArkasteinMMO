@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public abstract class CraganKnightPiece {
     protected final JavaPlugin plugin;
@@ -41,7 +43,8 @@ public abstract class CraganKnightPiece {
         meta.addAttributeModifier(
                 Attribute.ARMOR,
                 new AttributeModifier(
-                        new NamespacedKey(plugin, name.toLowerCase().replace(" ", "_") + "_armor"),
+                        UUID.randomUUID(),
+                        name.toLowerCase().replace(" ", "_") + "_armor",
                         armor,
                         AttributeModifier.Operation.ADD_NUMBER,
                         slot
